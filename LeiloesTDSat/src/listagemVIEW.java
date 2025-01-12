@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -136,17 +138,35 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
+        String id = id_produto_venda.getText(); 
+    
+    // Valida se o campo ID está preenchido
+    if (id.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, insira o ID do produto para vender.");
+        return;
+    }
+
+    try {
+        // Converte o ID para número inteiro
+        int idProduto = Integer.parseInt(id);
+
+        // Cria uma instância de ProdutosDAO
         ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
+
+        // Chama o método venderProduto passando o ID do produto
+        produtosdao.venderProduto(idProduto);
+
+        // Atualiza a tabela de produtos
         listarProdutos();
+    } catch (NumberFormatException e) {
+        // Caso o ID não seja um número válido
+        JOptionPane.showMessageDialog(null, "ID inválido. Insira um número válido.");
+    }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        VendasVIEW vendas = new VendasVIEW(); 
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
